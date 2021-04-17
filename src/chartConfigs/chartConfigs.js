@@ -2,7 +2,7 @@ export const historyOptions = {
   lineHeightAnnotation: {
     always: true,
     hover: false,
-    lineWeight: 1.5,
+    lineWeight: 1,
   },
 
   animation: {
@@ -13,8 +13,8 @@ export const historyOptions = {
   scales: {
     xAxes: [
       {
-        type: "time",
-        distribution: "linear",
+        type: 'time',
+        distribution: 'linear',
       },
     ],
   },

@@ -4,17 +4,19 @@ import { WatchListContext } from "../context/watchListContext";
 const AddCoin = () => {
   const [isActive, setIsActive] = useState(false);
   const { addCoin } = useContext(WatchListContext);
+  const [query, setQuery] = useState('')
   const availableCoins = [
-    "bitcoin",
-    "ethereum",
-    "ripple",
-    "tether",
-    "bitcoin-cash",
-    "litecoin",
-    "eos",
-    "okb",
-    "tezos",
-    "cardano",
+    'bitcoin',
+    'ethereum',
+    'dogecoin',
+    'ripple',
+    'tether',
+    'bitcoin-cash',
+    'litecoin',
+    'eos',
+    'okb',
+    'tezos',
+    'cardano',
   ];
 
   const handleClick = (coin) => {
@@ -23,27 +25,33 @@ const AddCoin = () => {
   };
 
   return (
-    <div className="dropdown">
-      <button
-        onClick={() => setIsActive(!isActive)}
-        className="btn btn-primary dropdown-toggle"
-        type="button"
+    <div className='dropdown d-flex align-items-center my-3 justify-content-center'>
+      <form        
+        onSubmit={(e) => {
+          e.preventDefault()
+          addCoin(query)
+          setQuery('')
+          setIsActive(false);
+        }}
       >
-        Add Coin
-      </button>
-      <div className={isActive ? "dropdown-menu show" : "dropdown-menu"}>
-        {availableCoins.map((el) => {
-          return (
-            <a
-              onClick={() => handleClick(el)}
-              href="#"
-              className="dropdown-item"
-            >
-              {el}
-            </a>
-          );
-        })}
-      </div>
+        <div className="input-group mb-3 my-3">
+          <input 
+            type="text" 
+            className="form-control" 
+            placeholder="e.g. Chainlink"
+            type='text'
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value)
+            }}
+          />
+          <div className="input-group-append">
+            <button 
+            className="btn btn-outline-secondary" 
+          >Search</button>
+          </div>
+        </div>
+      </form>
     </div>
   );
 };

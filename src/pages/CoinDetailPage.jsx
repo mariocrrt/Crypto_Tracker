@@ -24,30 +24,29 @@ const CoinDetailPage = () => {
       const [day, week, year, detail] = await Promise.all([
         coinGecko.get(`/coins/${id}/market_chart/`, {
           params: {
-            vs_currency: "usd",
-            days: "1",
+            vs_currency: 'eur',
+            days: '1',
           },
         }),
         coinGecko.get(`/coins/${id}/market_chart/`, {
           params: {
-            vs_currency: "usd",
-            days: "7",
+            vs_currency: 'eur',
+            days: '7',
           },
         }),
         coinGecko.get(`/coins/${id}/market_chart/`, {
           params: {
-            vs_currency: "usd",
-            days: "365",
+            vs_currency: 'eur',
+            days: '365',
           },
         }),
         coinGecko.get("/coins/markets/", {
           params: {
-            vs_currency: "usd",
+            vs_currency: 'eur',
             ids: id,
           },
         }),
       ]);
-      console.log(day);
 
       setCoinData({
         day: formatData(day.data.prices),
@@ -63,10 +62,10 @@ const CoinDetailPage = () => {
 
   const renderData = () => {
     if (isLoading) {
-      return <div>Loading....</div>;
+      return <div class="lds-facebook"><div></div><div></div><div></div></div>;
     }
     return (
-      <div className="coinlist">
+      <div className='coinlist'>
         <HistoryChart data={coinData} />
         <CoinData data={coinData.detail} />
       </div>

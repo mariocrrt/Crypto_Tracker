@@ -7,13 +7,13 @@ const CoinList = () => {
   const [coins, setCoins] = useState([]);
   const { watchList, deleteCoin } = useContext(WatchListContext);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(watchList);
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       const response = await coinGecko.get("/coins/markets/", {
         params: {
-          vs_currency: "usd",
+          vs_currency: 'eur',
           ids: watchList.join(","),
         },
       });
@@ -23,16 +23,18 @@ const CoinList = () => {
 
     if (watchList.length > 0) {
       fetchData();
-    } else setCoins([]);
+    } else {
+      setCoins([])
+    };
   }, [watchList]);
 
   const renderCoins = () => {
     if (isLoading) {
-      return <div>Loading...</div>;
+      return <div class="lds-facebook"><div></div><div></div><div></div></div>;
     }
 
     return (
-      <ul className="coinlist list-group mt-2">
+      <ul className='coinlist list-group mt-2'>
         {coins.map((coin) => {
           return <Coin key={coin.id} coin={coin} deleteCoin={deleteCoin} />;
         })}
