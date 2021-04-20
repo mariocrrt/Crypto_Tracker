@@ -2,36 +2,17 @@ import React, { useState, useContext } from "react";
 import { WatchListContext } from "../context/watchListContext";
 
 const AddCoin = () => {
-  const [isActive, setIsActive] = useState(false);
   const { addCoin } = useContext(WatchListContext);
   const [query, setQuery] = useState('')
-  const availableCoins = [
-    'bitcoin',
-    'ethereum',
-    'dogecoin',
-    'ripple',
-    'tether',
-    'bitcoin-cash',
-    'litecoin',
-    'eos',
-    'okb',
-    'tezos',
-    'cardano',
-  ];
-
-  const handleClick = (coin) => {
-    addCoin(coin);
-    setIsActive(false);
-  };
+  const [isActive, setIsActive] = useState(false)
 
   return (
-    <div className='dropdown d-flex align-items-center my-3 justify-content-center'>
+    <div className='dropdown d-flex align-items-center my-1 justify-content-between p-2'>
       <form        
         onSubmit={(e) => {
           e.preventDefault()
           addCoin(query)
           setQuery('')
-          setIsActive(false);
         }}
       >
         <div className="input-group mb-3 my-3">
@@ -39,19 +20,34 @@ const AddCoin = () => {
             type="text" 
             className="form-control" 
             placeholder="e.g. Chainlink"
-            type='text'
             value={query}
             onChange={(e) => {
               setQuery(e.target.value)
             }}
           />
           <div className="input-group-append">
-            <button 
-            className="btn btn-outline-secondary" 
-          >Search</button>
+            <button className="btn btn-outline-secondary">Search</button>
           </div>
         </div>
       </form>
+
+      <div className="btn-group">
+        <button 
+          onClick={() => {setIsActive(!isActive)}}
+          type="button" 
+          className="btn btn-dark dropdown-toggle" 
+          data-toggle="dropdown" 
+          aria-haspopup="true" 
+          aria-expanded="false"
+          >Currency
+        </button>
+        <div className={isActive ? 'dropdown-menu show' : 'dropdown-menu'}>
+          <a className="dropdown-item" href="#">EUR</a>
+          <a className="dropdown-item" href="#">USD</a>
+          <a className="dropdown-item" href="#">JPY</a>
+        </div>
+      </div>
+
     </div>
   );
 };

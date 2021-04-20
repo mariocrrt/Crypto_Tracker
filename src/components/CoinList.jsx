@@ -30,15 +30,17 @@ const CoinList = () => {
 
   const renderCoins = () => {
     if (isLoading) {
-      return <div class="lds-facebook"><div></div><div></div><div></div></div>;
+      return <div className="lds-facebook"><div></div><div></div><div></div></div>;
     }
 
     return (
-      <ul className='coinlist list-group mt-2'>
-        {coins.map((coin) => {
-          return <Coin key={coin.id} coin={coin} deleteCoin={deleteCoin} />;
-        })}
-      </ul>
+      <div>
+        <ul className='coinlist list-group mt-2'>
+          {coins.map((coin) => {
+            return <Coin key={coin.id} coin={coin} deleteCoin={deleteCoin} />;
+          })}
+        </ul>
+      </div>
     );
   };
 

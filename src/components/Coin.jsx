@@ -9,7 +9,7 @@ const Coin = ({ coin, deleteCoin }) => {
           <img className='coinlist-image' src={coin.image} alt="" />
           <span className='font-weight-bold'>{coin.name}</span>
         </div>
-        <span className='text-decoration-none font-weight-bold'>{coin.current_price}€</span>
+        <span className='text-decoration-none font-weight-bold'>{coin.current_price.toLocaleString()}€</span>
 
         <span
           className={
@@ -24,7 +24,7 @@ const Coin = ({ coin, deleteCoin }) => {
           ) : (
             <i className='fas fa-sort-up align-middle mr-1'></i>
           )}
-          {coin.price_change_percentage_24h}%
+          {coin.price_change_percentage_24h.toLocaleString()}%
         </span>
         <i
           onClick={(e) => {
