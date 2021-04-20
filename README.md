@@ -8,6 +8,6 @@
 - Added currency name under currency logo
 - Added loading animation
 
-## Upcoming features
+## Future Updates
 - Make the user choose between EUR, JPY, USD as reference currency 
 - Dark Mode
