@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { WatchListContext } from "../context/watchListContext";
 
 const Coin = ({ coin, deleteCoin }) => {
+  const { currency, setCurrency } = useContext(WatchListContext);
   return (
     <Link to={`/coins/${coin.id}`} className='text-decoration-none my-1 coin'>
       <li className='coinlist-item list-group-item list-group-item-action d-flex justify-content-between align-items-center text-dark'>
@@ -9,7 +11,11 @@ const Coin = ({ coin, deleteCoin }) => {
           <img className='coinlist-image' src={coin.image} alt="" />
           <span className='font-weight-bold'>{coin.name}</span>
         </div>
-        <span className='text-decoration-none font-weight-bold'>{coin.current_price.toLocaleString()}€</span>
+        <span className='text-decoration-none font-weight-bold'>{coin.current_price.toLocaleString()}
+        {
+          currency === 'eur' ? '€' : currency === 'jpy' ? '¥' : currency === 'usd' ? '$' : ''
+        }
+        </span>
 
         <span
           className={

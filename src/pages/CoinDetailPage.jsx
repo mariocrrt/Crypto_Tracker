@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import HistoryChart from "../components/HistoryChart";
 import CoinData from "../components/CoinData";
 import coinGecko from "../apis/coinGecko";
+import { WatchListContext } from "../context/watchListContext";
+
 
 const CoinDetailPage = () => {
   const { id } = useParams();
   const [coinData, setCoinData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const { currency, setCurrency } = useContext(WatchListContext);
 
   const formatData = (data) => {
     return data.map((el) => {
@@ -18,31 +21,48 @@ const CoinDetailPage = () => {
     });
   };
 
+  const determineCurrency = () => {
+    switch (currency) {
+      case currency === 'eur':
+        return eur;
+      case currency === 'jpy':
+        return jpy;
+      case currency === 'usd':
+        return usd;
+      default:
+        return currency;
+    }
+  };
+
+  const eur = 'eur'
+  const jpy = 'jpy'
+  const usd = 'usd'
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       const [day, week, year, detail] = await Promise.all([
         coinGecko.get(`/coins/${id}/market_chart/`, {
           params: {
-            vs_currency: 'eur',
+            vs_currency: determineCurrency(),
             days: '1',
           },
         }),
         coinGecko.get(`/coins/${id}/market_chart/`, {
           params: {
-            vs_currency: 'eur',
+            vs_currency: determineCurrency(),
             days: '7',
           },
         }),
         coinGecko.get(`/coins/${id}/market_chart/`, {
           params: {
-            vs_currency: 'eur',
+            vs_currency: determineCurrency(),
             days: '365',
           },
         }),
         coinGecko.get("/coins/markets/", {
           params: {
-            vs_currency: 'eur',
+            vs_currency: determineCurrency(),
             ids: id,
           },
         }),

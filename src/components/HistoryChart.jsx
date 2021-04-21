@@ -1,8 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import Chartjs from "chart.js";
 import { historyOptions } from "../chartConfigs/chartConfigs";
+import { WatchListContext } from "../context/watchListContext";
+
 
 const HistoryChart = ({ data }) => {
+  const { currency, setCurrency } = useContext(WatchListContext);
   const chartRef = useRef();
   const { day, week, year, detail } = data;
   const [timeFormat, setTimeFormat] = useState('24h');
@@ -47,7 +50,11 @@ const HistoryChart = ({ data }) => {
     if (detail) {
       return (
         <>
-          <p className="my-0">€{detail.current_price.toLocaleString()}</p>
+          <p className="my-0">Current price: {detail.current_price.toLocaleString()}
+          {
+            currency === 'eur' ? '€' : currency === 'jpy' ? '¥' : currency === 'usd' ? '$' : ''
+          }
+          </p>
           <p
             className={
               detail.price_change_24h < 0

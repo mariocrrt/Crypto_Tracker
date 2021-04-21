@@ -15,7 +15,7 @@ const CoinData = ({ data }) => {
               <span className='text-muted coin-data-category'>
                 Total Supply
               </span>
-              <span>{data.total_supply.toLocaleString()}</span>
+              <span>{data.total_supply}</span>
             </div>
           </div>
 

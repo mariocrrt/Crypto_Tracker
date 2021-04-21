@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { WatchListContext } from "../context/watchListContext";
 
 const AddCoin = () => {
-  const { addCoin } = useContext(WatchListContext);
+  const { addCoin, setCurrency, currency } = useContext(WatchListContext);
   const [query, setQuery] = useState('')
   const [isActive, setIsActive] = useState(false)
 
@@ -19,7 +19,7 @@ const AddCoin = () => {
           <input 
             type="text" 
             className="form-control" 
-            placeholder="e.g. Chainlink"
+            placeholder="e.g. Bitcoin"
             value={query}
             onChange={(e) => {
               setQuery(e.target.value)
@@ -42,9 +42,18 @@ const AddCoin = () => {
           >Currency
         </button>
         <div className={isActive ? 'dropdown-menu show' : 'dropdown-menu'}>
-          <a className="dropdown-item" href="#">EUR</a>
-          <a className="dropdown-item" href="#">USD</a>
-          <a className="dropdown-item" href="#">JPY</a>
+          <a onClick={() => {
+            setCurrency('eur')
+            setIsActive(false)
+          }}  className="dropdown-item" href="#">EUR</a>
+          <a onClick={() => {
+            setCurrency('usd')
+            setIsActive(false)
+          }} className="dropdown-item" href="#">USD</a>
+          <a onClick={() => {
+            setCurrency('jpy')
+            setIsActive(false)
+          }} className="dropdown-item" href="#">JPY</a>
         </div>
       </div>
 

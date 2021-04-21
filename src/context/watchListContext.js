@@ -11,6 +11,8 @@ export const WatchListContextProvider = (props) => {
     ]
   );
 
+  const [currency, setCurrency] = useState('eur')
+
   useEffect(() => {
     localStorage.setItem('watchList', watchList);
   }, [watchList]);
@@ -29,8 +31,9 @@ export const WatchListContextProvider = (props) => {
     }
   };
 
+
   return (
-    <WatchListContext.Provider value={{ watchList, deleteCoin, addCoin }}>
+    <WatchListContext.Provider value={{ watchList, deleteCoin, addCoin, setCurrency, currency }}>
       {props.children}
     </WatchListContext.Provider>
   );

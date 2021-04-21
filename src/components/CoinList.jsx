@@ -5,19 +5,45 @@ import Coin from "./Coin";
 
 const CoinList = () => {
   const [coins, setCoins] = useState([]);
-  const { watchList, deleteCoin } = useContext(WatchListContext);
+  const { watchList, deleteCoin, currency } = useContext(WatchListContext);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await coinGecko.get("/coins/markets/", {
-        params: {
-          vs_currency: 'eur',
-          ids: watchList.join(","),
-        },
-      });
-      setCoins(response.data);
+
+      const [eur, jpy, usd] = await Promise.all([
+        coinGecko.get("/coins/markets/", {
+          params: {
+            vs_currency: 'eur',
+            ids: watchList.join(","),
+          },
+        }),
+        coinGecko.get("/coins/markets/", {
+          params: {
+            vs_currency: 'jpy',
+            ids: watchList.join(","),
+          },
+        }),
+        coinGecko.get("/coins/markets/", {
+          params: {
+            vs_currency: 'usd',
+            ids: watchList.join(","),
+          },
+        })
+      ]);
+
+      if (currency === 'eur'){
+        const selectedCurrency = eur 
+        setCoins(selectedCurrency.data);
+      } else if (currency === 'jpy') {
+        const selectedCurrency = jpy
+        setCoins(selectedCurrency.data)
+      } else if (currency === 'usd') {
+        const selectedCurrency = usd
+        setCoins(selectedCurrency.data)
+      }
+
       setIsLoading(false);
     };
 
@@ -26,7 +52,7 @@ const CoinList = () => {
     } else {
       setCoins([])
     };
-  }, [watchList]);
+  }, [watchList, currency]);
 
   const renderCoins = () => {
     if (isLoading) {
